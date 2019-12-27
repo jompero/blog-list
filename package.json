@@ -11,11 +11,12 @@
     "node": "^13.5.0"
   },
   "devDependencies": {
+    "jest": "^24.9.0",
     "nodemon": "^2.0.2"
   },
   "scripts": {
     "watch": "nodemon index.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jest --verbose"
   },
   "repository": {
     "type": "git",
@@ -26,5 +27,8 @@
   "bugs": {
     "url": "https://github.com/jompero/blog-list/issues"
   },
-  "homepage": "https://github.com/jompero/blog-list#readme"
+  "homepage": "https://github.com/jompero/blog-list#readme",
+  "jest": {
+    "testEnvironment": "node"
+  }
 }
