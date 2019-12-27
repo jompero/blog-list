@@ -10,7 +10,7 @@ const config = require('./utils/config')
 const Blog = require('./models/blog')
 
 const mongoUrl = config.MONGODB_URI;
-mongoose.connect(mongoUrl, { useNewUrlParser: true })
+mongoose.connect(mongoUrl, { useNewUrlParser: true, useUnifiedTopology: true })
 
 app.use(cors())
 app.use(bodyParser.json())
