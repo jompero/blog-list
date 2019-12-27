@@ -1,16 +1,21 @@
-const http = require('http')
+const config = require('./utils/config')
 const express = require('express')
-const app = express()
 const bodyParser = require('body-parser')
+const app = express()
 const cors = require('cors')
 const mongoose = require('mongoose')
 
-const config = require('./utils/config')
-
 const Blog = require('./models/blog')
 
+console.log('connecting to', config.MONGODB_URI)
 const mongoUrl = config.MONGODB_URI;
 mongoose.connect(mongoUrl, { useNewUrlParser: true, useUnifiedTopology: true })
+  .then(() => {
+    console.log('connected to MongoDB')
+  })
+  .catch((error) => {
+    console.log('error connection to MongoDB:', error.message)
+  })
 
 app.use(cors())
 app.use(bodyParser.json())
@@ -33,7 +38,4 @@ app.post('/api/blogs', (request, response) => {
     })
 })
 
-const PORT = config.PORT
-app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`)
-})
+module.exports = app;
