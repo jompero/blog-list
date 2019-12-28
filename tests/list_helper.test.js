@@ -60,3 +60,26 @@ describe('mostBlogs', () => {
         expect(listHelper.mostBlogs(blogs)).toMatchObject(author)
     })
 })
+
+describe('mostLikes', () => {
+    test('of no blogs is null', () => {
+        expect(listHelper.mostLikes([])).toBe(null)
+    })
+
+    test('of one blog is the author of the blog itself', () => {
+        const author = {
+            author: "Michael Chan",
+            likes: 7
+        }
+        const blog = blogs.slice(0, 1)
+        expect(listHelper.mostLikes(blog)).toMatchObject(author)
+    })
+
+    test('of multiple blogs is from author with most likes', () => {
+        const author = {
+            author: "Edsger W. Dijkstra",
+            likes: 17
+        }
+        expect(listHelper.mostLikes(blogs)).toMatchObject(author)
+    })
+})
