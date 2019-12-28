@@ -22,3 +22,18 @@ describe('totalLikes', () => {
         expect(listHelper.totalLikes(blogs)).toBe(36)
     })
 })
+
+describe('favoriteBlog', () => {
+    test('of no blogs is null', () => {
+        expect(listHelper.favoriteBlog([])).toBe(null)
+    })
+
+    test('of one blog is the blog itself', () => {
+        const blog = blogs.slice(0, 1)
+        expect(listHelper.favoriteBlog(blog)).toBe(blog[0])
+    })
+
+    test('of multiple blogs is the one with most likes', () => {
+        expect(listHelper.favoriteBlog(blogs)).toBe(blogs[2])
+    })
+})
