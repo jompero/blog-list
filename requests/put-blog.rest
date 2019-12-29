@@ -1,0 +1,10 @@
+PUT http://localhost:3003/api/blogs/5e0867a69f922448f4559cbe
+Content-Type: application/json
+
+  {
+    "id": "5e0867a69f922448f4559cbe",
+    "title": "React patterns",
+    "author": "Michael Chan",
+    "url": "https://reactpatterns.com/",
+    "likes": 1
+  }
