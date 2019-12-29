@@ -97,7 +97,7 @@ describe('put', () => {
         const blog = blogs.body[0]
         const title = 'Test Title'
         blog.title = title
-        console.log('putting', blog)
+        // console.log('putting', blog)
         const putResponse = await api
             .put(`/api/blogs/${blog.id}`)
             .send(blog)
@@ -108,6 +108,6 @@ describe('put', () => {
     })
 })
 
-afterAll(() => {
-    mongoose.connection.close()
+afterAll(async () => {
+    await mongoose.connection.close()
 })
