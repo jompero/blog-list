@@ -1,13 +1,13 @@
 const errorHandler = (error, request, response, next) => {
     if (error.name === 'MissingArgumentsError' || error.name === 'ValidationError') {
         error.status = 400
-    } else if (error.name === 'AuthenticationError' || error.name === 'JsonWebTokenError') {
+    } else if (error.name === 'AuthenticationError' || error.name === 'JsonWebTokenError' || error.name === 'AuthorizationError') {
         error.status = 401
     } else {
         error.status = 500
     }
-    response.status(error.status);
-    response.json(error);
+    response.status(error.status)
+    response.json(error)
 }
 
 const tokenExtractor = (request, response, next) => {
