@@ -49,9 +49,11 @@ router.post('/', authenticate, async (request, response, next) => {
     return next(err)
   }
 
-  const user = await User.findOne({})
+  //const user = await User.findOne({})
   const likes = body.likes ? body.likes : 0
   console.log("likes:", likes)
+
+  console.log('user,', request.user)
 
   const blog = new Blog({
     title: body.title,
@@ -63,8 +65,11 @@ router.post('/', authenticate, async (request, response, next) => {
 
   try {
     const savedBlog = await blog.save()
-    user.blogs = user.blogs.concat(savedBlog._id)
-    await user.save()
+    console.log('blog saved', savedBlog)
+    const user = request.user
+    user.blogs = user.blogs ? user.blogs.concat(savedBlog._id) : [ savedBlog._id ]
+    const savedUser = await user.save()
+    console.log('user saved', savedUser)
     response.status(201).json(savedBlog)
   } catch (error) {
     next(error)
@@ -77,6 +82,10 @@ router.delete('/:id', authenticate, async (request, response, next) => {
     if (blog.user.toString() !== request.user.id) {
       return next(authError())
     }
+    const user = request.user
+    user.blogs = user.blogs.filter(id => id.toString() !== blog._id.toString())
+    console.log('Updated blogs', user.blogs)
+    user.save()
     blog.delete()
     response.status(204).end()
   } catch (error) {
@@ -86,7 +95,7 @@ router.delete('/:id', authenticate, async (request, response, next) => {
 
 router.put('/:id', async (request, response, next) => {
   try {
-    const blog = await Blog.findByIdAndUpdate(request.params.id, request.body)
+    const blog = await Blog.findByIdAndUpdate(request.params.id, request.body, { new: true }).populate('user', { username: 1, name: 1 })
     response.json(blog)
   } catch (error) {
     next(error)
